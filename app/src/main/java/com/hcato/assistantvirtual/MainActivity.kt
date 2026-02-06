@@ -14,8 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.hcato.assistantvirtual.core.di.AppContainer
+import com.hcato.assistantvirtual.core.navigation.NavigationWrapper
 import com.hcato.assistantvirtual.features.assistent.di.AdviceModule
+import com.hcato.assistantvirtual.features.assistent.navigation.AdviceNavGraph
 import com.hcato.assistantvirtual.features.assistent.presentation.screens.AdviceScreen
+import com.hcato.assistantvirtual.features.home.navigation.HomeNavGraph
+import com.hcato.assistantvirtual.features.login.di.LoginModule
+import com.hcato.assistantvirtual.features.login.navigation.LoginNavGraph
+import com.hcato.assistantvirtual.features.register.di.RegisterModule
+import com.hcato.assistantvirtual.features.register.navigation.RegisterNavGraph
+import com.hcato.assistantvirtual.features.updatestatus.di.UpdateStatusModule
+import com.hcato.assistantvirtual.features.updatestatus.navigation.UpdateStatusNavGraph
 import com.hcato.assistantvirtual.ui.theme.AssistantVirtualTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,11 +37,22 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         appContainer = AppContainer(this)
         val adviceModule = AdviceModule(appContainer)
+        val loginModule = LoginModule(appContainer)
+        val registerModule = RegisterModule(appContainer)
+        val updateModule = UpdateStatusModule(appContainer)
+        val navGraphs = listOf(
+            AdviceNavGraph(adviceModule),
+            HomeNavGraph(),
+            LoginNavGraph(loginModule),
+            RegisterNavGraph(registerModule),
+            UpdateStatusNavGraph(updateModule)
+        )
+        Log.d("Main", "Todo ok")
         enableEdgeToEdge()
         setContent {
             AssistantVirtualTheme {
                 MaterialTheme {
-                    AdviceScreen(adviceModule.provideAdviceViewModelFactory())
+                    NavigationWrapper(navGraphs)
                 }
             }
         }

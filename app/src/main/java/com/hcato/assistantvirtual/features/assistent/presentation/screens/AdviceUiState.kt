@@ -5,5 +5,7 @@ import com.hcato.assistantvirtual.features.assistent.domain.entities.Advice
 data class AdviceUiState (
     val isLoading: Boolean = false,
     val advice: Advice? = null,
-    val error: String? = null
+    val error: String? = null,
+    val isPremium: Boolean = false,
+    val isUpdatingPremium: Boolean = false
 )

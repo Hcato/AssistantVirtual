@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.secrets.gradle)
+    alias(libs.plugins.jetbrainsKotlinSerialization)
 }
 
 android {
@@ -55,6 +56,8 @@ android {
 
             buildConfigField("String", "BASE_URL", "\"https://api.adviceslip.com/\"")
 
+            buildConfigField("String","BASE_URL_LOCAL", "\"http://10.0.2.2:8081/\"")
+
             resValue("string", "app_name", "Assistant Virtual (DEV)")
         }
 
@@ -62,6 +65,8 @@ android {
             dimension = "environment"
 
             buildConfigField("String", "BASE_URL", "\"https://api.adviceslip.com/\"")
+
+            buildConfigField("String","BASE_URL_LOCAL", "\"http://10.0.2.2:8081/\"")
 
             resValue("string", "app_name", "Assistant Virtual"
             )
@@ -95,10 +100,17 @@ dependencies {
     implementation(libs.com.squareup.retrofit2.retrofit)        // Retrofit
     implementation(libs.com.squareup.retrofit2.converter.json)  // JSON
     implementation(libs.io.coil.kt.coil.compose)
-    implementation(libs.androidx.ui)                // IO
+    implementation(libs.androidx.ui)// IO
+    implementation(libs.androidx.navigation.compose)// Navigation
     implementation("io.github.sceneview:sceneview:2.2.1") //SceneView 3D
     implementation("androidx.media:media:1.7.0") //TTS Voice
     implementation("com.google.mlkit:translate:17.0.2") //Translate
+    implementation("androidx.datastore:datastore-preferences:1.1.1") //DataStore
+    implementation(libs.androidx.navigation.common.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.runtime)
+    implementation(libs.androidx.material3) //Translate
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

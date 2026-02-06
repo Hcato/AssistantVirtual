@@ -6,6 +6,9 @@ import com.hcato.assistantvirtual.features.assistent.domain.repositories.Transla
 import com.hcato.assistantvirtual.features.assistent.domain.usecases.GetAdviceUseCase
 import com.hcato.assistantvirtual.features.assistent.domain.usecases.TranslateAdviceUseCase
 import com.hcato.assistantvirtual.features.assistent.presentation.viewmodels.AdviceViewModelFactory
+import com.hcato.assistantvirtual.features.deleteuser.domain.usecase.DeleteUserUseCase
+import com.hcato.assistantvirtual.features.updatestatus.domain.repositories.UpdateStatusRepository
+import com.hcato.assistantvirtual.features.updatestatus.domain.usecases.UpdateStatusUseCase
 
 class AdviceModule (
     private val appContainer: AppContainer
@@ -15,7 +18,7 @@ class AdviceModule (
     }
     fun provideAdviceViewModelFactory(): AdviceViewModelFactory{
         return AdviceViewModelFactory(
-            provideGetAdviceUseCase(), provideTranslateAdviceUseCase()
+            provideGetAdviceUseCase(), provideTranslateAdviceUseCase(),provideGetUpdateStatusUseCase(),provideGetDeleteUserUseCase()
         )
     }
     fun provideTranslatorRepository(): TranslatorRepository =
@@ -23,4 +26,12 @@ class AdviceModule (
 
     fun provideTranslateAdviceUseCase(): TranslateAdviceUseCase =
         TranslateAdviceUseCase(provideTranslatorRepository())
+
+
+    private fun provideGetUpdateStatusUseCase(): UpdateStatusUseCase{
+        return UpdateStatusUseCase(appContainer.updateStatusRepository)
+    }
+    private fun provideGetDeleteUserUseCase(): DeleteUserUseCase{
+        return DeleteUserUseCase(appContainer.deleteUserRepository)
+    }
 }
